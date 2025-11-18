@@ -1,0 +1,9 @@
+# Quarto preview and cache files
+.quarto/
+*.qmd.cache/
+*.ipynb.cache/
+
+# Build output (if you don't want to commit the built site)
+_site/
+
+/.quarto/
