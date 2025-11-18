@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Bits: The Difference that Makes a Difference – From Bits to Embeddings – A Critical Introduction to Information Theory</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notebooks/02_entropy.html" rel="next">
+<link href="../index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e2f21b8b26cfe1f95c57aeb85eb423d2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="text/javascript">
+// Hide code blocks that start with %%html
+(function() {
+  function hideHtmlBlocks() {
+    // Try multiple selectors in case Quarto structure varies
+    const selectors = [
+      'div.sourceCode.cell-code',
+      'div.cell-code.sourceCode',
+      '.cell-code'
+    ];
+    
+    let codeBlocks = [];
+    for (const selector of selectors) {
+      codeBlocks = document.querySelectorAll(selector);
+      if (codeBlocks.length > 0) break;
+    }
+    
+    codeBlocks.forEach(block => {
+      const code = block.querySelector('code.sourceCode') || block.querySelector('code');
+      if (code) {
+        const textContent = code.textContent || code.innerText || '';
+        if (textContent.trim().startsWith('%%html')) {
+          // Hide the code block
+          block.style.display = 'none';
+          block.classList.add('hide-code-block');
+          
+          // The toggle is actually a <details> element wrapping the code block
+          // Find the parent <details> element (it has class "code-fold")
+          let details = block.closest('details.code-fold');
+          if (!details) {
+            // Alternative: find parent that contains the summary with "Code Toggle"
+            let parent = block.parentElement;
+            while (parent && parent !== document.body) {
+              const summary = parent.querySelector('summary');
+              if (summary && (summary.textContent.includes('Code Toggle') || summary.textContent.includes('Toggle'))) {
+                details = parent;
+                break;
+              }
+              parent = parent.parentElement;
+            }
+          }
+          
+          if (details) {
+            details.style.display = 'none';
+            details.classList.add('hide-code-block');
+          }
+        }
+      }
+    });
+  }
+  
+  // Run immediately if DOM is ready, otherwise wait
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hideHtmlBlocks);
+  } else {
+    hideHtmlBlocks();
+  }
+  
+  // Also run after a short delay in case content loads dynamically
+  setTimeout(hideHtmlBlocks, 100);
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/01_bits.html">Part I — Information Theory</a></li><li class="breadcrumb-item"><a href="../notebooks/01_bits.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bits: The Difference that Makes a Difference</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">From Bits to Embeddings – A Critical Introduction to Information Theory</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I — Information Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/01_bits.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bits: The Difference that Makes a Difference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/02_entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Entropy: Expected Differences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/03_kl_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">KL Divergence: Differences Between Expected Differences</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-general-commmunications-system" id="toc-the-general-commmunications-system" class="nav-link active" data-scroll-target="#the-general-commmunications-system"><span class="header-section-number">2.1</span> The General Commmunications System</a></li>
+  <li><a href="#the-information-source-stochastic-parrots" id="toc-the-information-source-stochastic-parrots" class="nav-link" data-scroll-target="#the-information-source-stochastic-parrots"><span class="header-section-number">2.2</span> The Information Source: Stochastic Parrots</a>
+  <ul>
+  <li><a href="#zipfs-law" id="toc-zipfs-law" class="nav-link" data-scroll-target="#zipfs-law"><span class="header-section-number">2.2.1</span> Zipf’s Law</a></li>
+  <li><a href="#a-simple-language-model" id="toc-a-simple-language-model" class="nav-link" data-scroll-target="#a-simple-language-model"><span class="header-section-number">2.2.2</span> A simple language model</a></li>
+  </ul></li>
+  <li><a href="#the-transmitter-words-as-bits" id="toc-the-transmitter-words-as-bits" class="nav-link" data-scroll-target="#the-transmitter-words-as-bits"><span class="header-section-number">2.3</span> The Transmitter: Words as Bits</a>
+  <ul>
+  <li><a href="#the-most-simple-language" id="toc-the-most-simple-language" class="nav-link" data-scroll-target="#the-most-simple-language"><span class="header-section-number">2.3.1</span> The most simple language</a>
+  <ul class="collapse">
+  <li><a href="#aside-what-does-the-logarithm-do" id="toc-aside-what-does-the-logarithm-do" class="nav-link" data-scroll-target="#aside-what-does-the-logarithm-do"><span class="header-section-number">2.3.1.1</span> Aside: What Does the Logarithm Do?</a></li>
+  </ul></li>
+  <li><a href="#bits-for-probabilities" id="toc-bits-for-probabilities" class="nav-link" data-scroll-target="#bits-for-probabilities"><span class="header-section-number">2.3.2</span> Bits for Probabilities</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/01_bits.html">Part I — Information Theory</a></li><li class="breadcrumb-item"><a href="../notebooks/01_bits.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bits: The Difference that Makes a Difference</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bits: The Difference that Makes a Difference</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-general-commmunications-system" class="level2 page-columns page-full" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-general-commmunications-system"><span class="header-section-number">2.1</span> The General Commmunications System</h2>
+<p>Recall from the introdution the “conduit metaphor” that guides not just information theory but more broadly many of our received notions of communications today. As I wrote, this metaphor is most neatly encapsulated in the “General Communication System” deviced by Claude Shannon in a seminal 1948 paper. Shannon envisioned communication as a system with distinct analytical parts, which you can explore in this interactive figure:</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Shannon, C. E. (1948). A Mathematical Theory of Communication. The Bell System Technical Journal, 27(3), 379–423. The Bell System Technical Journal. <a href="https://ieeexplore.ieee.org/document/6773024">[URL]</a></p>
+</div></div><div id="01051ec3-1403-4f72-82bb-24722dbf7074" class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="19">
+<!-- Interactive version: self-contained HTML + JS tooltip hover (works in Quarto + Jupyter when trusted) -->
+<div id="shannon-diagram" style="background:#fff; color:#000; font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; text-align:center; padding:20px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 900 400" style="max-width:100%;height:auto">
+    <defs>
+      <marker id="arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="6" markerheight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#000"></path>
+      </marker>
+    </defs>
+
+    <!-- Arrows -->
+    <path class="arrow" d="M160 190 H245" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M365 190 H450" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M490 190 H575" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M695 190 H780" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M470 285 V205" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+
+    <!-- Nodes -->
+    <g class="node" data-title="Information Source" data-desc="Produces a message consisting of symbols, words, data, etc.<br>(e.g. &quot;SOS&quot;)">
+      <rect x="40" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="100" y="140" text-anchor="middle" font-weight="bold">INFORMATION</text>
+      <text x="100" y="155" text-anchor="middle" font-weight="bold">SOURCE</text>
+      <text x="202.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node" data-title="Transmitter" data-desc="Encodes the message into a signal for the channel<br>(e.g. &quot;SOS&quot; becomes &quot;... --- ...&quot;)">
+      <rect x="245" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="305" y="155" text-anchor="middle" font-weight="bold">TRANSMITTER</text>
+      <text x="407.5" y="210" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node" data-title="Channel" data-desc="Carries the signal through a medium<br>(e.g., wire, air, fiber).">
+      <rect x="450" y="175" width="40" height="30" fill="#fff" stroke="#000" stroke-width="2" rx="4"></rect>
+      <text x="532.5" y="210" text-anchor="middle">RECEIVED</text>
+      <text x="532.5" y="225" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node" data-title="Receiver" data-desc="Decodes the signal to reconstruct the message.<br>(e.g. &quot;... --- ...&quot; becomes &quot;SOS&quot;)">
+      <rect x="575" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="635" y="155" text-anchor="middle" font-weight="bold">RECEIVER</text>
+      <text x="737.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node" data-title="Destination" data-desc="The intended receiver or user of the message, whether human or machine.">
+      <rect x="780" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="840" y="155" text-anchor="middle" font-weight="bold">DESTINATION</text>
+    </g>
+
+    <g class="node" data-title="Noise Source" data-desc="Random disturbances that alter the signal.<br>(e.g. &quot;... --- ...&quot; becomes &quot;... --- ..-&quot;)">
+      <rect x="430" y="285" width="80" height="60" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="470" y="365" text-anchor="middle" font-weight="bold">NOISE SOURCE</text>
+    </g>
+  </svg>
+
+  <div id="tooltip" style="position:fixed; pointer-events:none; padding:8px 10px; font-size:12px; background:#fff; border:1px solid #999; border-radius:6px; opacity:0; transition:opacity 0.15s ease; box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+</div>
+
+<script type="text/javascript">
+(function(){
+  const container=document.getElementById('shannon-diagram');
+  const nodes=container.querySelectorAll('.node');
+  const tooltip=document.getElementById('tooltip');
+
+  nodes.forEach(node=>{
+    node.addEventListener('mouseenter',e=>{
+      tooltip.innerHTML='<strong>'+node.dataset.title+'</strong><br>'+node.dataset.desc;
+      tooltip.style.opacity='1';
+    });
+    node.addEventListener('mousemove',e=>{
+      tooltip.style.left=e.clientX+10+'px';
+      tooltip.style.top=e.clientY-20+'px';
+    });
+    node.addEventListener('mouseleave',()=>{
+      tooltip.style.opacity='0';
+    });
+  });
+})();
+</script>
+
+<!-- Instructions for Quarto or Jupyter -->
+<!--
+Use this block in a Quarto .qmd or Jupyter cell:
+
+Quarto:
+```{=html}
+<div id="shannon-diagram"> ... </div>
+```
+
+Jupyter Notebook:
+%%html
+<div id="shannon-diagram"> ... </div>
+
+Make sure notebook is trusted (File → Trust Notebook) or in Quarto, ensure `execute: true`.
+-->
+</div>
+</div>
+<p>What we have here, first, is an <strong>information source</strong> that selects a message out of a finite set of possible messages. For instance, this might be a person typing on a keyboard. In fact, the message could come from <em>any</em> stochastic and ergodic process, which simply means a random process which, over time, is regular enough to form statistical patterns.</p>
+<p>Next, these messages are encoded by a <strong>transmitter</strong> which converts them into a code. We saw the example of Morse in the introduction. However, here we will be looking at the encoding of messages as the <em>bits</em>, zeroes and ones. When typing on a keyboard, our computer does this for us.</p>
+<p>Once the message is encoded as bits, it can be sent over as a <strong>signal</strong> over a <strong>channel</strong>. Effectively, the “channel” is all the material infrastructdure between a sender and a receiver, including in our example fiberoptic cables, routers, internet protocols, etc. In this process, some <strong>noise</strong> might be introduced to the signal. For instance, maybe some bits are scrambled when a data package is lost or perhaps a malicious third party modifies the signal.</p>
+<p>Be that as it may, we hopefully reach a <strong>receiver</strong> that decodes the message, usually by running the inverse operation of the transmitter. In our example, bits are turned into words and the words reach their <strong>destination</strong>, which Weaver and Shannon (1963, 33—34, 57) defined as “[t]he person or thing for whom the message is intended.”</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Shannon, C. E., &amp; Weaver, W. (1963). The Mathematical Theory of Communication (1st paperback). University of Illinois Press.</p>
+</div></div><p>In this chapter, we will start from the encoding of words as bits in the transmitter. Why bits? And what do we have to assume of language to encode it like that?</p>
+</section>
+<section id="the-information-source-stochastic-parrots" class="level2 page-columns page-full" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-information-source-stochastic-parrots"><span class="header-section-number">2.2</span> The Information Source: Stochastic Parrots</h2>
+<p>Information theory as we know it starts from cryptographic work done during World War II by Shannon and others. Whereas the early information theory of the interwar era by people such as Ralph Hartley and Harry Nyquist treated language as a sort of constant to be dealt with in the domain of telephony and telegraphy, Shannon took a different approach. Leaning on insights by earier cryptographers, Shannon approach language as “stochastic” and “ergodic” process. What this suggests is simply that there is statistical regularity to how frequent words are in text.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<blockquote class="blockquote">
+<p>A language is considered for cryptographic purposes to be a stochastic process which produces a discrete sequence of symbols in accordance with some systems of probabilities.</p>
+</blockquote>
+<p>Shannon, C. E. (1945). A Mathematical Theory of Cryptography—Case 10878. Bell Telephone Laboratories, Princeton Libraries. (p.&nbsp;2)</p>
+</div></div><p>What this implies is a strong hypothesis about how language works and about the <strong>source</strong> that produces the inputs in the General System of Communication. Rather than people choosing words to speak at will, language itself appears as a constraint to which we have to adapt as we speak. Indeed, it is almost as if it was language that used us, rather than the other way around. Before we dive into the world of bits, we need to dwell on this conceptualization of the source that produces the inputs to its systems. This section is dedicated to that task.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Geoghegan, B. D. (2019). Architectures of information—A comparison of Wiener’s and Shannon’s theories of information. In T. Vardouli &amp; O. Touloumi (Eds.), <em>Computer Architectures: Constructing the Common Ground</em>. Routledge. <a href="https://www.taylorfrancis.com/chapters/edit/10.4324/9780429264306-8/architectures-information-bernard-dionysius-geoghegan">[URL]</a></p>
+</div></div><div id="fb8b1f11-4005-4932-a121-2e649dfea791" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="21">
+<!-- Interactive version: self-contained HTML + JS tooltip hover (works in Quarto + Jupyter when trusted) -->
+<div id="shannon-diagram-source" style="background:#fff; color:#000; font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; text-align:center; padding:20px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 900 400" style="max-width:100%;height:auto">
+    <defs>
+      <marker id="arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="6" markerheight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#000"></path>
+      </marker>
+    </defs>
+
+    <!-- Arrows -->
+    <path class="arrow" d="M160 190 H245" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M365 190 H450" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M490 190 H575" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M695 190 H780" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M470 285 V205" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+
+    <!-- Nodes -->
+    <g class="node highlighted-node" data-title="Information Source" data-desc="Produces a message consisting of symbols, words, data, etc.<br>(e.g. &quot;SOS&quot;)">
+      <rect x="40" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="100" y="140" text-anchor="middle" font-weight="bold">INFORMATION</text>
+      <text x="100" y="155" text-anchor="middle" font-weight="bold">SOURCE</text>
+      <text x="202.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node" data-title="Transmitter" data-desc="Encodes the message into a signal for the channel<br>(e.g. &quot;SOS&quot; becomes &quot;... --- ...&quot;)">
+      <rect x="245" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="305" y="155" text-anchor="middle" font-weight="bold">TRANSMITTER</text>
+      <text x="407.5" y="210" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node" data-title="Channel" data-desc="Carries the signal through a medium<br>(e.g., wire, air, fiber).">
+      <rect x="450" y="175" width="40" height="30" fill="#fff" stroke="#000" stroke-width="2" rx="4"></rect>
+      <text x="532.5" y="210" text-anchor="middle">RECEIVED</text>
+      <text x="532.5" y="225" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node" data-title="Receiver" data-desc="Decodes the signal to reconstruct the message.<br>(e.g. &quot;... --- ...&quot; becomes &quot;SOS&quot;)">
+      <rect x="575" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="635" y="155" text-anchor="middle" font-weight="bold">RECEIVER</text>
+      <text x="737.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node" data-title="Destination" data-desc="The intended receiver or user of the message, whether human or machine.">
+      <rect x="780" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="840" y="155" text-anchor="middle" font-weight="bold">DESTINATION</text>
+    </g>
+
+    <g class="node" data-title="Noise Source" data-desc="Random disturbances that alter the signal.<br>(e.g. &quot;... --- ...&quot; becomes &quot;... --- ..-&quot;)">
+      <rect x="430" y="285" width="80" height="60" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="470" y="365" text-anchor="middle" font-weight="bold">NOISE SOURCE</text>
+    </g>
+  </svg>
+
+  <div class="tooltip" style="position:fixed; pointer-events:none; padding:8px 10px; font-size:12px; background:#fff; border:1px solid #999; border-radius:6px; opacity:0; transition:opacity 0.15s ease; box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+</div>
+
+<script type="text/javascript">
+requestAnimationFrame(function(){
+  const container=document.getElementById('shannon-diagram-source');
+  const nodes=container.querySelectorAll('.node');
+  const tooltip=container.querySelector('.tooltip');
+
+  nodes.forEach(node=>{
+    node.addEventListener('mouseenter',e=>{
+      tooltip.innerHTML='<strong>'+node.dataset.title+'</strong><br>'+node.dataset.desc;
+      tooltip.style.opacity='1';
+    });
+    node.addEventListener('mousemove',e=>{
+      tooltip.style.left=e.clientX+10+'px';
+      tooltip.style.top=e.clientY-20+'px';
+    });
+    node.addEventListener('mouseleave',()=>{
+      tooltip.style.opacity='0';
+    });
+  });
+})();
+</script>
+
+<!-- Instructions for Quarto or Jupyter -->
+<!--
+Use this block in a Quarto .qmd or Jupyter cell:
+
+Quarto:
+```{=html}
+<div id="shannon-diagram"> ... </div>
+```
+
+Jupyter Notebook:
+%%html
+<div id="shannon-diagram"> ... </div>
+
+Make sure notebook is trusted (File → Trust Notebook) or in Quarto, ensure `execute: true`.
+-->
+</div>
+</div>
+<p>In a famous critique of LLMs, Emily Bender and co-authors described these and other language models (LMs) as a “system for haphazardly stitching together sequences of linguistic form”:</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Bender, E. M., Gebru, T., McMillan-Major, A., &amp; Shmitchell, S. (2021). On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? 🦜 Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency, 610–623. <a href="https://doi.org/10.1145/3442188.3445922">[URL]</a></p>
+</div></div><blockquote class="blockquote">
+<p>Contrary to how it may seem when we observe its output, an LM is a system for haphazardly stitching together sequences of linguistic forms it has observed in its vast training data, according to probabilistic information about how they combine, but without any reference to meaning a stochastic parrot.</p>
+</blockquote>
+<p>What does it mean? Simply that LMs draw on observed probabilities of words and their co-occurence to form the sentences that we see on services like ChatGPT and Gemini. They treat language as a <strong>probability distribution</strong>. While LLMs find complex dependencies in how words co-occur over long passages of text, we will start with a much simpler representation of language.</p>
+<section id="zipfs-law" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="zipfs-law"><span class="header-section-number">2.2.1</span> Zipf’s Law</h3>
+<p>This idea of treating language probabilistically is very old. Already in 1932, the linguist George Zipf had observed that word frequency is inversely proportional to work rank, a regularity which later became known as <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">“Zipf’s law”</a>. Zipf’s Law is an example of one of the most simple language models, an early representation of language as a stochastic process. Zipf’s Law is interesting, because it is based on <em>observed</em> frequencies of words. In this sense, it is a herald of the empirical approach to language that predominates in language modelling today. Using these observed probabilities of individual words, we can already build a simple language model. Let us do just that using Lewis Carroll’s “Alice in Wonderland”. For this purpose, we will use the <a href="https://www.nltk.org/">NLTK</a> library to download the text and to “tokenize” it into individual words.</p>
+<div id="751c2517-9766-4911-a64f-16cc5779034b" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> gutenberg</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> RegexpTokenizer</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt_tab'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="f2ddba93-445a-44b2-a2db-b18a12b589c2" class="cell" data-execution_count="42">
+<details class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../py'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plots <span class="im">import</span> (</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    plot_word_dist, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    plot_log,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    plot_probability_sequence,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    compare_distributions_in_plot</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"ticks"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Using a custom function we can see how this tokenization works:</p>
+<div id="f5916efd-8cdf-4ca5-a835-1f71163297ee" class="cell" data-execution_count="25">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tokens_from_gutenberg_text(txt_name):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    sents <span class="op">=</span> gutenberg.sents(txt_name)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [word <span class="cf">for</span> sent <span class="kw">in</span> sents <span class="cf">for</span> word <span class="kw">in</span> sent]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    tokenizer <span class="op">=</span> RegexpTokenizer(<span class="vs">r'\w+'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> tokenizer.tokenize(<span class="st">" "</span>.join(words).lower())</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tokens</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>alice_tokens <span class="op">=</span> tokens_from_gutenberg_text(<span class="st">'carroll-alice.txt'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>alice_tokens[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>['alice',
+ 's',
+ 'adventures',
+ 'in',
+ 'wonderland',
+ 'by',
+ 'lewis',
+ 'carroll',
+ '1865',
+ 'chapter']</code></pre>
+</div>
+</div>
+<p>We can also count the words, to get an initial sense of what kind of distribution to expect:</p>
+<div id="b290d351-b081-4387-8082-24a0f1b7f43d" class="cell" data-execution_count="26">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>alice_counts <span class="op">=</span> Counter(alice_tokens)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>alice_counts.most_common(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>[('the', 1642),
+ ('and', 872),
+ ('to', 729),
+ ('a', 632),
+ ('it', 595),
+ ('she', 553),
+ ('i', 543),
+ ('of', 514),
+ ('said', 462),
+ ('you', 411)]</code></pre>
+</div>
+</div>
+</section>
+<section id="a-simple-language-model" class="level3 page-columns page-full" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="a-simple-language-model"><span class="header-section-number">2.2.2</span> A simple language model</h3>
+<p>What do these counts mean in terms of probabilities? To estimate that, we count how many times each token appears (its frequency) and then divide that by the total number of tokens.</p>
+<div id="417f8166-5f54-4e64-a575-998446d1c324" class="cell" data-execution_count="27">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_probs_from_counter(counts: Counter[<span class="bu">str</span>]) <span class="op">-&gt;</span> Counter[<span class="bu">str</span>]:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(counts.values())</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    probs <span class="op">=</span> Counter({token: count <span class="op">/</span> total <span class="cf">for</span> token, count <span class="kw">in</span> counts.items()})</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The top 10 most common words in Alice in Wonderland are mostly so called “stopwords” (the, and, to, a, etc.) and words relating to dialogue:</p>
+<div id="5cf0c0c6-fcaa-44ec-9844-1615cecbf6cb" class="cell" data-execution_count="28">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>alice_probs <span class="op">=</span> get_probs_from_counter(alice_counts)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>alice_probs.most_common(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>[('the', 0.06006731050629207),
+ ('and', 0.03189932689493708),
+ ('to', 0.026668129938542583),
+ ('a', 0.023119695639449808),
+ ('it', 0.021766169154228857),
+ ('she', 0.020229733684518584),
+ ('i', 0.019863915715539946),
+ ('of', 0.0188030436055019),
+ ('said', 0.016900790166812993),
+ ('you', 0.01503511852502195)]</code></pre>
+</div>
+</div>
+<p>Together, the probabilities of these words form a <strong>probability distribution</strong>. For the 15 most common words, the distribution looks like this:</p>
+<div id="9616e8a0-2309-48a5-8cdb-2bae839d8f24" class="cell" data-execution_count="29">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_word_dist(alice_probs, <span class="st">'bar'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_bits_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Once we have a distribution of observed probabilities, we can also <em>draw</em> from it. This means that we sample from our representation of language to produce a sequence of words. This is, effectively, what large language models also do, but with a lot more complicated representations. Nevertheless, what we have at hand is a <em>de facto</em> language model.</p>
+<p>To draw a fifty word sentence from our representation of language as it appears in Alice in Wonderland, we can run the following code:</p>
+<div id="e8cbe99a-5c30-44b8-a668-f29bd0297e40" class="cell" data-execution_count="30">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">42</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>outcomes <span class="op">=</span> <span class="bu">list</span>(alice_probs.keys())</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> random.choices(outcomes, weights<span class="op">=</span>alice_probs.values(), k<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>.join(sample))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>rather in into and cut eat wandered the think in and some in her zealand from and said live alice his been a to king a the the him must his hurry they worried would put offended you sighing which legged i and it the and the but people could</code></pre>
+</div>
+</div>
+<p>Not a great representation! But it’s also not entirely random. The word “the” appears over and over again, simply because it appears the most often in this (and any given English) text. However, we could work with a completely random sample as well. In this case, we would just give each word the same probability.</p>
+<div id="68de1f7b-0c77-4145-aefb-161c48a1554f" class="cell" data-execution_count="31">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> probs_to_uniform(top_probs, n, n_total):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    keys <span class="op">=</span> [k <span class="cf">for</span> k, _ <span class="kw">in</span> top_probs.most_common(n)]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    uniform_prob <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> n_total</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Counter({k: uniform_prob <span class="cf">for</span> k <span class="kw">in</span> keys})</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>n_tokens <span class="op">=</span> <span class="bu">len</span>(alice_tokens)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>n_types <span class="op">=</span> <span class="bu">len</span>(<span class="bu">list</span>(alice_counts.keys()))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>alice_uniform <span class="op">=</span> probs_to_uniform(alice_probs, n_types, n_types)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>alice_uniform.most_common(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>[('the', 0.00038895371450797355),
+ ('and', 0.00038895371450797355),
+ ('to', 0.00038895371450797355),
+ ('a', 0.00038895371450797355),
+ ('it', 0.00038895371450797355),
+ ('she', 0.00038895371450797355),
+ ('i', 0.00038895371450797355),
+ ('of', 0.00038895371450797355),
+ ('said', 0.00038895371450797355),
+ ('you', 0.00038895371450797355)]</code></pre>
+</div>
+</div>
+<div id="67332f41-4a64-408d-a417-19aef1e02d70" class="cell" data-execution_count="32">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>outcomes <span class="op">=</span> <span class="bu">list</span>(alice_uniform.keys())</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> random.choices(outcomes, weights<span class="op">=</span>alice_uniform.values(), k<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>.join(sample))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>floor fell unimportant justice favoured fender live tougher watch remarks believed farmer wig hoped furrows roughly wow way sigh worth jumped fifteenth warning shoulder normans lived anywhere easy knee sudden undertone waving hurrying classics guests race loving twist turned other suddenly houses growls wind seemed girls pictured closed queerest appealed</code></pre>
+</div>
+</div>
+<p>No the word “the” doesn’t appear a single time! Visually, the probability distribution now looks like this for the first 18 words:</p>
+<div id="0a9d5996-7ece-4fbd-91f5-a04efc235d06" class="cell" data-execution_count="33">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_word_dist(alice_uniform, <span class="st">'bar'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_bits_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Unlike our representation using observed word probabilities, we use a simplifying assumption here. We loose all sense of structure, everything becomes uniform. By contrast, the observed probabilities already had some <strong>redundancy</strong>. We know, for instance, that by always picking the word “the” we will be more likely to correctly predict a draw from the text than always picking the word “alice”.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<blockquote class="blockquote">
+<p>The redundancy, on the other hand, measures the amount of constraint imposed on a text in the language due to its statistical structure, e.g., in English the high frequency of the letter E, the strong tendency of H to follow T or of L’ to follow Q.</p>
+</blockquote>
+<p>Shannon, C. E. (1951). Prediction and Entropy of Printed English. Bell System Technical Journal, 30(1), 50–64. <a href="https://archive.org/details/bstj30-1-50">[URL]</a></p>
+</div></div></section>
+</section>
+<section id="the-transmitter-words-as-bits" class="level2 page-columns page-full" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="the-transmitter-words-as-bits"><span class="header-section-number">2.3</span> The Transmitter: Words as Bits</h2>
+<p>Okay, now we’ve established some key things: - We know what a distribution is - We know that Shannon and other pioneers of cybernetics thought of language as a stochastic process applying to discrete symbols and words - Ergo: Language was a distribution for them - If we know some of the statistical regularities or the “redundancies” of this distribution we can work on problems like cryptography and machine translation. - Zipf’s Law is an example of a very simple approximation of such redundancies, based solely on a generalization from observed word frequencies.</p>
+<p>However, in order to do anything practical with this hypothesis about the <strong>source</strong>, our distributions of interested have to be somehow represented and encoded in order to be <strong>transmitted</strong>. Let’s revisit the image of the noisy channel. In Morse code, we would encode our words using the long and short codes, encoded as such by a <a href="https://en.wikipedia.org/wiki/Telegraph_key">telegraph key</a>. This would be our <strong>transmitter</strong>. However, Morse is not the most efficient way to represent language.</p>
+<div id="69d20207-76f2-459d-a92f-557e3e256c98" class="cell" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="35">
+<!-- Interactive version: self-contained HTML + JS tooltip hover (works in Quarto + Jupyter when trusted) -->
+<div id="shannon-diagram-transmitter" style="background:#fff; color:#000; font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; text-align:center; padding:20px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 900 400" style="max-width:100%;height:auto">
+    <defs>
+      <marker id="arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="6" markerheight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#000"></path>
+      </marker>
+    </defs>
+
+    <!-- Arrows -->
+    <path class="arrow" d="M160 190 H245" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M365 190 H450" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M490 190 H575" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M695 190 H780" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+    <path class="arrow" d="M470 285 V205" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)"></path>
+
+    <!-- Nodes -->
+    <g class="node" data-title="Information Source" data-desc="Produces a message consisting of symbols, words, data, etc.<br>(e.g. &quot;SOS&quot;)">
+      <rect x="40" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="100" y="140" text-anchor="middle" font-weight="bold">INFORMATION</text>
+      <text x="100" y="155" text-anchor="middle" font-weight="bold">SOURCE</text>
+      <text x="202.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node highlighted-node" data-title="Transmitter" data-desc="Encodes the message into a signal for the channel<br>(e.g. &quot;SOS&quot; becomes &quot;... --- ...&quot;)">
+      <rect x="245" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="305" y="155" text-anchor="middle" font-weight="bold">TRANSMITTER</text>
+      <text x="407.5" y="210" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node" data-title="Channel" data-desc="Carries the signal through a medium<br>(e.g., wire, air, fiber).">
+      <rect x="450" y="175" width="40" height="30" fill="#fff" stroke="#000" stroke-width="2" rx="4"></rect>
+      <text x="532.5" y="210" text-anchor="middle">RECEIVED</text>
+      <text x="532.5" y="225" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node" data-title="Receiver" data-desc="Decodes the signal to reconstruct the message.<br>(e.g. &quot;... --- ...&quot; becomes &quot;SOS&quot;)">
+      <rect x="575" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="635" y="155" text-anchor="middle" font-weight="bold">RECEIVER</text>
+      <text x="737.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node" data-title="Destination" data-desc="The intended receiver or user of the message, whether human or machine.">
+      <rect x="780" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="840" y="155" text-anchor="middle" font-weight="bold">DESTINATION</text>
+    </g>
+
+    <g class="node" data-title="Noise Source" data-desc="Random disturbances that alter the signal.<br>(e.g. &quot;... --- ...&quot; becomes &quot;... --- ..-&quot;)">
+      <rect x="430" y="285" width="80" height="60" fill="#fff" stroke="#000" stroke-width="2" rx="6"></rect>
+      <text x="470" y="365" text-anchor="middle" font-weight="bold">NOISE SOURCE</text>
+    </g>
+  </svg>
+
+  <div class="tooltip" style="position:fixed; pointer-events:none; padding:8px 10px; font-size:12px; background:#fff; border:1px solid #999; border-radius:6px; opacity:0; transition:opacity 0.15s ease; box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+</div>
+
+<script type="text/javascript">
+  requestAnimationFrame(function(){
+    const container=document.getElementById('shannon-diagram-transmitter');
+    const nodes=container.querySelectorAll('.node');
+    const tooltip=container.querySelector('.tooltip');
+
+  nodes.forEach(node=>{
+    node.addEventListener('mouseenter',e=>{
+      tooltip.innerHTML='<strong>'+node.dataset.title+'</strong><br>'+node.dataset.desc;
+      tooltip.style.opacity='1';
+    });
+    node.addEventListener('mousemove',e=>{
+      tooltip.style.left=e.clientX+10+'px';
+      tooltip.style.top=e.clientY-20+'px';
+    });
+    node.addEventListener('mouseleave',()=>{
+      tooltip.style.opacity='0';
+    });
+  });
+})();
+</script>
+
+<!-- Instructions for Quarto or Jupyter -->
+<!--
+Use this block in a Quarto .qmd or Jupyter cell:
+
+Quarto:
+```{=html}
+<div id="shannon-diagram"> ... </div>
+```
+
+Jupyter Notebook:
+%%html
+<div id="shannon-diagram"> ... </div>
+
+Make sure notebook is trusted (File → Trust Notebook) or in Quarto, ensure `execute: true`.
+-->
+</div>
+</div>
+<p>Basing his ideas on innovations in “Boolean algebra”, Shannon decided that the most intuitive way to represent anything was the most simple one: as “yes” or “no”, 0 or 1. A poll in the coffee room of Bell Labs–where Shannon worked at the time-established that this unit should be known as a “bit” of information.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Shannon, C. E. (1940). A symbolic analysis of relay and switching circuits [Thesis, Massachusetts Institute of Technology]. <a href="https://dspace.mit.edu/handle/1721.1/11173">[URL]</a></p>
+</div></div><section id="the-most-simple-language" class="level3 page-columns page-full" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="the-most-simple-language"><span class="header-section-number">2.3.1</span> The most simple language</h3>
+<p>In his original papers, Shannon demonstrated the first principles of information theory using a coin toss, only then moving on to human language. We will follow Shannon there. In fact, a coin toss might be one of the most simple stochastic processes, as it only has two outcomes (heads or tails) and, if the coin is fair, no structure or redundancy.</p>
+<p>In order to work with the probabilities of a coin toss in Python, we are going to use <code>numpy</code> to generate probability distributions and show the behavior of coins that are fair (heads and tails are equally likely) and biased (heads is more likely than tails, or vice versa.).</p>
+<p>Using the code below, we can generate the probabilities of a coin that is biased towards tails (the first five values) or heads (the last five values).</p>
+<div id="c9e50bd2-dc09-4864-b302-6b023893cb7c" class="cell" data-execution_count="55">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>p_heads <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>p_heads</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="55">
+<pre><code>array([0.   , 0.125, 0.25 , 0.375, 0.5  , 0.625, 0.75 , 0.875, 1.   ])</code></pre>
+</div>
+</div>
+<div id="d5f8ce3f-768d-4eb7-9b53-461639fecf5e" class="cell" data-execution_count="62">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot_probability_sequence(p_heads)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_bits_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Above, we let the probability of heads increase in small increments from 0 to 1. That gives us a list of different values for <span class="math inline">\(P(H)\)</span>, for different “coins” with different biases, if you will. Now we can get a similar sized but <em>inverse</em> list of <span class="math inline">\(P(T)\)</span> by just taking <span class="math inline">\(1 - P(H)\)</span>.</p>
+<p><strong>PROMPT:</strong> Generate <code>p_heads</code> using <code>linspace</code> and then use <code>p_heads</code> to create <code>p_tails</code>.</p>
+<div id="f6d4a7af-c680-40ce-b1cc-e103737ff130" class="cell" data-execution_count="63">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>p_tails <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> p_heads</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Plotting the probabilities of heads and tails for each of our nine coins, we can see how the probability of one falls as the probability for the other goes up.</p>
+<div id="0ed8974b" class="cell" data-execution_count="68">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>compare_distributions_in_plot(<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)),</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                              p_heads, </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                              p_tails,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                              <span class="vs">r'$P(H)$'</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                              <span class="vs">r'$P(T)$'</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Coin"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Probability"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Probabilities of heads and tails"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_bits_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This might seem stupidly self-evident, but there is a point here: We are establishing a very simple baseline from which to build up our understanding of bits and information. In fact, how could we represent the possible outcomes of a <em>single</em> and <em>fair</em> coin toss as bits?</p>
+<p><strong>PROMPT:</strong> If we want to represent a single, fair coin toss as bits, how do we proceed? How many bits do we need in total?</p>
+<div id="27b0c902-308c-49d3-83a3-2d03d97e79b6" class="cell" data-execution_count="18">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_simple_bit_table(outcome, bits):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    n_bits <span class="op">=</span> [<span class="bu">len</span>(b) <span class="cf">for</span> b <span class="kw">in</span> bits]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'outcomes'</span>:outcome, </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">'bits'</span>:bits, </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">'n_bits'</span>:n_bits}).style.hide()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="0e4c239b-eab1-42ea-9ef5-b7c694ba00f7" class="cell">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>print_simple_bit_table([<span class="st">'heads'</span>, <span class="st">'tails'</span>], [<span class="st">'0'</span>, <span class="st">'1'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<style type="text/css">
+</style>
+
+<table id="T_7afa4" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_7afa4_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">outcomes</th>
+<th id="T_7afa4_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">bits</th>
+<th id="T_7afa4_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">n_bits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_7afa4_row0_col0" class="data row0 col0">heads</td>
+<td id="T_7afa4_row0_col1" class="data row0 col1">0</td>
+<td id="T_7afa4_row0_col2" class="data row0 col2">1</td>
+</tr>
+<tr class="even">
+<td id="T_7afa4_row1_col0" class="data row1 col0">tails</td>
+<td id="T_7afa4_row1_col1" class="data row1 col1">1</td>
+<td id="T_7afa4_row1_col2" class="data row1 col2">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>As you can see, we can represent heads as 0 and tails as 1. And, in total, we need two bits to represent the <em>sample space</em> of a single toss of a fair coin. Using notation from probability and set theory, we might write:</p>
+<p><span class="math inline">\(A = \{H, T\}\)</span></p>
+<p>Our sample space consists of just two options, and we only need two bits to represent it (assuming each outcome is equally likely!).</p>
+<details>
+<summary>
+<strong>PROMPT:</strong> Let’s move up. What is the sample space of two successive coin tosses of a fair coin?
+</summary>
+<p><br></p>
+<span class="math inline">\(A = \{HH, HT, TT, TH \}\)</span>
+</details>
+<p><strong>PROMPT:</strong> If we want to represent this sample space of two coin tosses in bits, how do we do it?</p>
+<div id="741fd8a2-1465-4324-8311-98b4376acd5c" class="cell" data-execution_count="21">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>two_toss_combinations <span class="op">=</span> [<span class="st">'HH'</span>, <span class="st">'HT'</span>, <span class="st">'TT'</span>, <span class="st">'TH'</span>]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>two_bit_combinations <span class="op">=</span> [<span class="st">'00'</span>, <span class="st">'01'</span>, <span class="st">'10'</span>, <span class="st">'11'</span>]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>print_simple_bit_table(two_toss_combinations, two_bit_combinations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<style type="text/css">
+</style>
+
+<table id="T_09d3d" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_09d3d_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">outcomes</th>
+<th id="T_09d3d_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">bits</th>
+<th id="T_09d3d_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">n_bits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_09d3d_row0_col0" class="data row0 col0">HH</td>
+<td id="T_09d3d_row0_col1" class="data row0 col1">00</td>
+<td id="T_09d3d_row0_col2" class="data row0 col2">2</td>
+</tr>
+<tr class="even">
+<td id="T_09d3d_row1_col0" class="data row1 col0">HT</td>
+<td id="T_09d3d_row1_col1" class="data row1 col1">01</td>
+<td id="T_09d3d_row1_col2" class="data row1 col2">2</td>
+</tr>
+<tr class="odd">
+<td id="T_09d3d_row2_col0" class="data row2 col0">TT</td>
+<td id="T_09d3d_row2_col1" class="data row2 col1">10</td>
+<td id="T_09d3d_row2_col2" class="data row2 col2">2</td>
+</tr>
+<tr class="even">
+<td id="T_09d3d_row3_col0" class="data row3 col0">TH</td>
+<td id="T_09d3d_row3_col1" class="data row3 col1">11</td>
+<td id="T_09d3d_row3_col2" class="data row3 col2">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<details>
+<summary>
+<strong>PROMPT:</strong> So far, we have been counting <i>total</i> bits. However, how many questions would we need <i>on average</i> to find out what the outcome was in the last experiment?
+</summary>
+<p><br> Two questions!</p>
+<p><strong>First question:</strong> Is the first throw heads? If yes, we have <span class="math inline">\(\{HH, HT\}\)</span> left. If no, we have <span class="math inline">\(\{TT, TH \}\)</span> left.</p>
+<p><strong>Second question:</strong> Is the first throw heads? Whatever the answer, only one option will remain.</p>
+Of course we could get lucky by asking just one question. Say, for example, the outcome was <span class="math inline">\(HH\)</span>. If we ask “was it heads and heads”, we would’ve needed only one question. But then we would’ve been lucky. <em>On average</em> we need two questions.
+</details>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Bateson, G. (2000). “Double Bind” in <em>Steps to an Ecology of Mind: Collected Essays in Anthropology, Psychiatry, Evolution, and Epistemology</em>. University of Chicago Press.</p>
+</div></div><p>This was the big innovation from Shannon. A <strong>bit is the number of yes-no questions we need to ask in order to know an outcome in an experiment</strong>. This is why Gregory Bateson called a bit “the difference which makes a difference.” If we start with the bit <span class="math inline">\(0\)</span>, the <span class="math inline">\(0\)</span> is the first “difference” which makes the difference that our sequence is one that starts with heads. If we add a <span class="math inline">\(0\)</span> to the bit sequence, the “difference” which is made determines that the full sequence is <span class="math inline">\(HH\)</span>. Once we get to represent language with bits in the next section, this becomes less tautological.</p>
+<p>What is more, this average number of bits that we need to answer as yes-no question was, in fact, how Shannon <strong>defined information</strong>. Before we go on to formalize this discovery mathematically, let’s build up some more intuition.</p>
+<p>Let’s consider an experiment with three trials or tosses. Typing that out is annoying, so we’ll use a helper function for it.</p>
+<div id="91f07c3f-c884-4490-b588-93223c8e604b" class="cell" data-execution_count="22">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> produce_N_combinations(items, N):</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="st">''</span>.join(x) <span class="cf">for</span> x <span class="kw">in</span> product(items, repeat <span class="op">=</span> N)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>PROMPT:</strong> How big is the sample space of eight trials? You can use <code>produce_N_compitations</code> to find out.</p>
+<div id="97daac96-aca8-49a8-a6de-70c689598df2" class="cell" data-execution_count="23">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>three_toss_combinations <span class="op">=</span> produce_N_combinations([<span class="st">'T'</span>, <span class="st">'H'</span>], <span class="dv">3</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>three_toss_combinations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>['TTT', 'TTH', 'THT', 'THH', 'HTT', 'HTH', 'HHT', 'HHH']</code></pre>
+</div>
+</div>
+<p><strong>PROMPT:</strong> How would we encode that in bits? Use <code>produce_N_combinations</code> again, if you want.</p>
+<div id="f9f81625-7821-4208-9a97-372f68e1d36d" class="cell" data-execution_count="24">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>three_bit_combinations <span class="op">=</span> produce_N_combinations([<span class="st">'0'</span>, <span class="st">'1'</span>], <span class="dv">3</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>three_bit_combinations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>['000', '001', '010', '011', '100', '101', '110', '111']</code></pre>
+</div>
+</div>
+<div id="ad0f5dbb-731b-4b76-b4b8-0e2f16eb5382" class="cell" data-execution_count="25">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>print_simple_bit_table(three_toss_combinations, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                       three_bit_combinations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<style type="text/css">
+</style>
+
+<table id="T_01d32" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_01d32_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">outcomes</th>
+<th id="T_01d32_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">bits</th>
+<th id="T_01d32_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">n_bits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_01d32_row0_col0" class="data row0 col0">TTT</td>
+<td id="T_01d32_row0_col1" class="data row0 col1">000</td>
+<td id="T_01d32_row0_col2" class="data row0 col2">3</td>
+</tr>
+<tr class="even">
+<td id="T_01d32_row1_col0" class="data row1 col0">TTH</td>
+<td id="T_01d32_row1_col1" class="data row1 col1">001</td>
+<td id="T_01d32_row1_col2" class="data row1 col2">3</td>
+</tr>
+<tr class="odd">
+<td id="T_01d32_row2_col0" class="data row2 col0">THT</td>
+<td id="T_01d32_row2_col1" class="data row2 col1">010</td>
+<td id="T_01d32_row2_col2" class="data row2 col2">3</td>
+</tr>
+<tr class="even">
+<td id="T_01d32_row3_col0" class="data row3 col0">THH</td>
+<td id="T_01d32_row3_col1" class="data row3 col1">011</td>
+<td id="T_01d32_row3_col2" class="data row3 col2">3</td>
+</tr>
+<tr class="odd">
+<td id="T_01d32_row4_col0" class="data row4 col0">HTT</td>
+<td id="T_01d32_row4_col1" class="data row4 col1">100</td>
+<td id="T_01d32_row4_col2" class="data row4 col2">3</td>
+</tr>
+<tr class="even">
+<td id="T_01d32_row5_col0" class="data row5 col0">HTH</td>
+<td id="T_01d32_row5_col1" class="data row5 col1">101</td>
+<td id="T_01d32_row5_col2" class="data row5 col2">3</td>
+</tr>
+<tr class="odd">
+<td id="T_01d32_row6_col0" class="data row6 col0">HHT</td>
+<td id="T_01d32_row6_col1" class="data row6 col1">110</td>
+<td id="T_01d32_row6_col2" class="data row6 col2">3</td>
+</tr>
+<tr class="even">
+<td id="T_01d32_row7_col0" class="data row7 col0">HHH</td>
+<td id="T_01d32_row7_col1" class="data row7 col1">111</td>
+<td id="T_01d32_row7_col2" class="data row7 col2">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<details>
+<summary>
+<strong>PROMPT:</strong> How many questions do we need now?
+</summary>
+<p><br></p>
+<p>Three questions!</p>
+<p><strong>First question:</strong> Is the first throw heads? If yes, we have <span class="math inline">\(\{HTT, HTH, HHT, HHH\}\)</span> left. If no, we have <span class="math inline">\(\{TTT, TTH, THT, THH \}\)</span> left.</p>
+With four options left, we know from above we need just two more questions. So three questions in total!
+</details>
+<details>
+<summary>
+<b>PROMPT:</b> Do you notice some sort of connection between how we build our outcomes and the number of bits we need to describe the distribution?
+</summary>
+<p>Yes, there is indeed a connection. And that’s good, because all this counting can get tiresome…</p>
+<p>To know how many options we have to choose among, we can use a simple formula. If <span class="math inline">\(S\)</span> is the number of symbols we can choose from (i.e.&nbsp;2, because we choose between <span class="math inline">\(H\)</span> and <span class="math inline">\(T\)</span>) and <span class="math inline">\(n\)</span> is the number of combinations of those (3 in the above example), then the number of basic outcomes <span class="math inline">\(E\)</span> (e.g.&nbsp;<span class="math inline">\(HH\)</span>, <span class="math inline">\(HT\)</span>) is:</p>
+<span class="math inline">\(E = S^n\)</span>
+</details>
+<p>Let’s try it out:</p>
+<div id="2ec0c2ef-377c-4e9a-9672-596407c6b543" class="cell" data-execution_count="71">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="30e02411-9521-4b5e-8eaf-0090878c3cad" class="cell" data-execution_count="72">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> np.power(S, n)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>E.item()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="72">
+<pre><code>8</code></pre>
+</div>
+</div>
+<p>Two outcomes <span class="math inline">\(H\)</span> and <span class="math inline">\(T\)</span> can be combined combined in sequences of three in eight different ways, just as we saw above.</p>
+<p><strong>PROMPT:</strong> How many bits will we need to represent these options?</p>
+<p>If we already know <span class="math inline">\(E\)</span>, we can find out how many bits we need by taking the <em>logarithm</em> of <span class="math inline">\(E\)</span>, because the logarithm is simply the inverse of a power:</p>
+<div id="96e5e951-fa19-45b1-9055-13b2a791824a" class="cell" data-execution_count="73">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>np.log2(E).item()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="73">
+<pre><code>3.0</code></pre>
+</div>
+</div>
+<p>In fact, we can count the number of bits we need directly from <span class="math inline">\(n\)</span> and <span class="math inline">\(S\)</span>:</p>
+<div id="60cc9cdf-0c39-413d-a671-49a64cdd8a4f" class="cell" data-execution_count="74">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>n<span class="op">*</span>np.log2(S).item()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="74">
+<pre><code>3.0</code></pre>
+</div>
+</div>
+<p>This is also how Ralph Hartley, an engineer at Bell Labs, defined information in a paper in 1928. For him information was just:</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Hartley, R. V. L. (1928). Transmission of Information. Bell System Technical Journal, 7(3), 535–563. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/j.1538-7305.1928.tb01236.x">[URL]</a> <br> <br> Nyquist, H. (1924). Certain factors affecting telegraph speed. The Bell System Technical Journal, 3(2), 324–346. The Bell System Technical Journal. <a href="https://doi.org/10.1002/j.1538-7305.1924.tb01361.x">[URL]</a></p>
+</div></div><p><span class="math display">\[
+n \cdot \log S
+\]</span></p>
+<p>But this isn’t the definition of that history settled on, and <em>only</em> applies to uniform distributions where all outcomes are equally likely. In fact, already before Shannon, Hartley and Ralph Nyquist at Bell Labs had defined “intelligence” in the above manner. While entirely satisfactory for uniform distributions, this definition does not work when we stop assuming all outcomes are equally probable. Furthermore, we have not even worked with actual probabilities yet! Instead, we have just assumed uniformity. In order to move away from that assumption, we have to define bits for probabilities.</p>
+<p>Before we move on to deal with that in final part of this section, let’s end this one by taking a little detour to understand the logarithm. If you are already familiar with logs, feels free to jump to the last part on bits for probabilities.</p>
+<section id="aside-what-does-the-logarithm-do" class="level4 page-columns page-full" data-number="2.3.1.1">
+<h4 data-number="2.3.1.1" class="anchored" data-anchor-id="aside-what-does-the-logarithm-do"><span class="header-section-number">2.3.1.1</span> Aside: What Does the Logarithm Do?</h4>
+<p>Notice how we used <code>numpy.log2</code> in the previous section to calculate the number of bits needed to encode our sequence of coin tosses. In, fact, we use <span class="math inline">\(log_2\)</span> because it assumes <span class="math inline">\(S=2\)</span>, 0 or 1, “yes” or “no”. If we use some other logarithm, it’s no longer the number of bits we are calculating. For instance, using a logarithm of the natural number <span class="math inline">\(e\)</span> would give us the necessary number of “nats”.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>For a very approachable introduction to bits, including intuitive explanations of the logarithm, and information theory more broadly, I recommend the work of information theorist John Pierce. <br> <br> Pierce, J. R. (1980). <em>An Introduction to Information Theory: Symbols, Signals and Noise</em>. (Second revised edition). Dover Books.</p>
+</div></div><p>The logarithm to the base 2 of a number is the power to which 2 must be raised to equal the number. We can express the same thing mathematically:</p>
+<p><span class="math display">\[
+2^{\log_2 x} = x\\
+\]</span></p>
+<p>With our three tosses of heads and tails:</p>
+<p><span class="math display">\[
+\log_2 8 = 3 \\
+2^{\log_2 8} = 8 \\
+2^3 = 8
+\]</span></p>
+<p>Two must be raised to <span class="math inline">\(3\)</span> to give us 8.</p>
+<p><strong>PROMPT:</strong> What are the logarithms of the following numbers: 1, 2, 4, 8, 16, 32, 64?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\mathbf{x}\)</span></th>
+<th><span class="math inline">\(\mathbf{\log_2 x}\)</span></th>
+<th>why?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(2^0 = 1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(2^1 = 2\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(2^2 = 4\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(8\)</span></td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(2^3 = 8\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(16\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(2^4 = 16\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(32\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+<td><span class="math inline">\(2^5 = 32\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(64\)</span></td>
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(2^6 = 64\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>As we can see when plotting the logarithms, the logarithm of a number <span class="math inline">\(x\)</span> first grows very quickly, but then slows down.</p>
+<div id="a0b2df99-7ec8-4595-aa14-7cdbf5d23f44" class="cell" data-execution_count="77">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plot_log()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_bits_files/figure-html/cell-36-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="bits-for-probabilities" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="bits-for-probabilities"><span class="header-section-number">2.3.2</span> Bits for Probabilities</h3>
+<p>So far we have worked with <em>counts</em>, but we started out asking how we could encode <em>probabilities</em>. How could we make that leap? An interesting property with the logarithm, is that taking the log of a fraction gives us the same result as taking the log of the denominator <em>but negative</em>. So</p>
+<p><span class="math display">\[
+\log_2 2 = 1
+\]</span></p>
+<p>And:</p>
+<p><span class="math display">\[
+\log_2\frac{1}{2} = - 1
+\]</span></p>
+<p>This means that counting logs for a uniform distribution where all events are equally probable is just like working with counts, but negative!</p>
+<p><strong>PROMPT:</strong> What are the logarithms of the following numbers: <span class="math inline">\(\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{16}, \frac{1}{32}, \frac{1}{64}\)</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 43%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\mathbf{x}\)</span></th>
+<th><span class="math inline">\(\mathbf{\log_2 x}\)</span></th>
+<th>why?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(2^0 = 1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td><span class="math inline">\(-1\)</span></td>
+<td><span class="math inline">\(2^{-1} = \frac{1}{2}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\frac{1}{4}\)</span></td>
+<td><span class="math inline">\(-2\)</span></td>
+<td><span class="math inline">\(2^{-2} = \frac{1}{4}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\frac{1}{8}\)</span></td>
+<td><span class="math inline">\(-3\)</span></td>
+<td><span class="math inline">\(2^{-3} = \frac{1}{8}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\frac{1}{16}\)</span></td>
+<td><span class="math inline">\(-4\)</span></td>
+<td><span class="math inline">\(2^{-4} = \frac{1}{16}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\frac{1}{32}\)</span></td>
+<td><span class="math inline">\(-5\)</span></td>
+<td><span class="math inline">\(2^{-5} = \frac{1}{32}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\frac{1}{64}\)</span></td>
+<td><span class="math inline">\(-6\)</span></td>
+<td><span class="math inline">\(2^{-6} = \frac{1}{64}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Plotting the log for our fractional <span class="math inline">\(x\)</span> values, we can note that the log grows very quickly as we start from very small values and move to larger ones, only to flatten out asymptotically when we approach <span class="math inline">\(x\)</span>.</p>
+<div id="d44abf1f-8f31-4ef1-9773-a69a2695069b" class="cell">
+<details open="" class="code-fold">
+<summary>Code Toggle</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>plot_log(frac<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_bits_files/figure-html/cell-37-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Okay, given that we can use logarithms to count bits for probabilities, we are ready to move on to a more general definition of information that does not assume uniformity.</p>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notebooks/02_entropy.html" class="pagination-link" aria-label="Entropy: Expected Differences">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Entropy: Expected Differences</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

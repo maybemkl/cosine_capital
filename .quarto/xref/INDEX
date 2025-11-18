@@ -1,0 +1,14 @@
+{
+  "index.qmd": {
+    "index.html": "735bac30"
+  },
+  "notebooks/01_bits.ipynb": {
+    "01_bits.html": "0091dafe"
+  },
+  "notebooks/02_entropy.ipynb": {
+    "02_entropy.html": "f57b5b19"
+  },
+  "notebooks/03_kl_divergence.ipynb": {
+    "03_kl_divergence.html": "07b91b1b"
+  }
+}

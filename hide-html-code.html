@@ -1,0 +1,63 @@
+<script type="text/javascript">
+// Hide code blocks that start with %%html
+(function() {
+  function hideHtmlBlocks() {
+    // Try multiple selectors in case Quarto structure varies
+    const selectors = [
+      'div.sourceCode.cell-code',
+      'div.cell-code.sourceCode',
+      '.cell-code'
+    ];
+    
+    let codeBlocks = [];
+    for (const selector of selectors) {
+      codeBlocks = document.querySelectorAll(selector);
+      if (codeBlocks.length > 0) break;
+    }
+    
+    codeBlocks.forEach(block => {
+      const code = block.querySelector('code.sourceCode') || block.querySelector('code');
+      if (code) {
+        const textContent = code.textContent || code.innerText || '';
+        if (textContent.trim().startsWith('%%html')) {
+          // Hide the code block
+          block.style.display = 'none';
+          block.classList.add('hide-code-block');
+          
+          // The toggle is actually a <details> element wrapping the code block
+          // Find the parent <details> element (it has class "code-fold")
+          let details = block.closest('details.code-fold');
+          if (!details) {
+            // Alternative: find parent that contains the summary with "Code Toggle"
+            let parent = block.parentElement;
+            while (parent && parent !== document.body) {
+              const summary = parent.querySelector('summary');
+              if (summary && (summary.textContent.includes('Code Toggle') || summary.textContent.includes('Toggle'))) {
+                details = parent;
+                break;
+              }
+              parent = parent.parentElement;
+            }
+          }
+          
+          if (details) {
+            details.style.display = 'none';
+            details.classList.add('hide-code-block');
+          }
+        }
+      }
+    });
+  }
+  
+  // Run immediately if DOM is ready, otherwise wait
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hideHtmlBlocks);
+  } else {
+    hideHtmlBlocks();
+  }
+  
+  // Also run after a short delay in case content loads dynamically
+  setTimeout(hideHtmlBlocks, 100);
+})();
+</script>
+

@@ -1,0 +1,31 @@
+project:
+  type: book
+  output-dir: _site
+
+book:
+  title: "From Bits to Embeddings – A Critical Introduction to Information Theory"
+  chapters:
+    - index.qmd
+    - part: "Part I — Information Theory"
+      chapters:
+        - notebooks/01_bits.ipynb
+        - notebooks/02_entropy.ipynb
+        - notebooks/03_kl_divergence.ipynb
+
+format:
+  html:
+    monofont: "JetBrains Mono"
+    code-overflow: scroll
+    css: styles.css
+    include-in-header: hide-html-code.html
+    theme: cosmo
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    math: mathjax
+    code-fold: show
+    code-summary: "Code Toggle"
+
+execute:
+  freeze: false
+  cache: true

@@ -1,0 +1,47 @@
+---
+title: Introduction
+subtitle: "Understanding how the Noisy Channel metaphor underlies both bits and embeddings"
+---
+
+This website provides supplementary context for the articles ["Cosine Capital: Large language models and the embedding of all things"](https://journals.sagepub.com/doi/10.1177/20539517251386055) (Big Data & Society, October 2025) and ["Taking AI into the Tunnels"](https://www.e-flux.com/journal/151/652643/taking-ai-into-the-tunnels) (e-flux, January 2025), along with some upcoming articles on the same topic. More than that, it provides a comprehensive introduction to classical information theory as it was conceived by Claude Shannon and its connections and impacts on neural network and large language model (LLM) research today.
+
+Information theory relies on a very particular metaphor that understand communication as a sort of "conduit": You encode a message with a key, send the encoded message to a receiver, who decodes it with the same key, and reads the message. For instance, if you write "SOS" in Morse code, they "key" is the table that tells you how many dots (.) and dashes (-) to use for the letters S and O. In this case, the encoded version of your message is "...---...", i.e. three dots, three dashes, and, again, three dots. 
+
+::: {.column-margin}
+Reddy, M. (1993). The conduit metaphor. In *Metaphor and thought* (2nd ed., pp. 164–201). Cambridge University Press.
+:::
+
+No where is this logic as neatly encapsulated as in the "The General Communications System" deviced by Claude Shannon, who is widely concidered the father of modern information theory. In this diagram, a sender picks a message (SOS), encodes it (... --- ...) using an [appropriate device](https://en.wikipedia.org/wiki/Telegraph_key), sends it over a channel such as telegraph wires to a [receiver](https://en.wikipedia.org/wiki/Telegraph_sounder), that then decodes the original "SOS" message from the dots and dashes. In the process, physical distortion on the line might scramble the encoded message, perhaps converting it to "... --- ..-". In this case, the receiver would decode it as "SOU" since "..-" stands for "U" in Morse. The wrong message would be received.
+
+::: {.column-margin}
+![](img/shannon_general_communication_system_diagram.png)
+A "General Communications System". Shannon, C. E. (1948). A Mathematical Theory of Communication. The Bell System Technical Journal, 27(3), 379–423. The Bell System Technical Journal. [[URL]](https://ieeexplore.ieee.org/document/6773024) 
+:::
+
+While this technical definition of communication in itself is quite straightforward, the general metaphor has taken an astonishing hold of how we understand communication more broadly, as linguists like Michael Reddy and George Lakoff have highlighted. Already in his introduction to Shannon's seminal book on information theory, Warren Weaver suggested that words might encode intentions that are then decoded from the words. If the words are decoded wrong, false intentions are deciphered from them. Indeed, as I and others have argued elsewhere, this metaphor seems to guide the field of natural language processing (NLP) today, not least in how large language models (LLMs) are understood to model and replicate human language. 
+
+::: {.column-margin}
+Lakoff, G., & Johnson, M. (2008). *Metaphors we live by*. University of Chicago Press.
+<br>
+<br>
+Bender, E. M., & Koller, A. (2020). Climbing towards NLU: On Meaning, Form, and Understanding in the Age of Data. *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics*, 5185–5198. [[URL]](https://doi.org/10.18653/v1/2020.acl-main.463)
+<br>
+<br>
+Brunila, M. (2025). Cosine capital: Large language models and the embedding of all things. *Big Data & Society*, 12(4). [[URL]](https://doi.org/10.1177/20539517251386055)
+:::
+
+On this website, I will, in the first instance, use Shannon's diagram of a General Communications System to provide not only a *technical* introduction to classical information theory but also a *conceptual* map between these technical concepts and the conduit metaphor of communication. Starting from the encoding of words into the zeroes and ones of **bits**, I move to show how expected information in bits is quantified through **information entropy**, and compared through **relative entropy**, **information** or **Kullback-Leibler divergence**, and **cross-entropy**. On the way, I connect these technical concepts to conceptual readings of information theory by anthropologists such as Gregory Bateson. In the second instance, I show how these tools and metaphors have gained new force through their application in the encoder-decoder architectures that are implicitly or explicitly implemented in both small (Word2Vec) and large (Transformer) language models. At this time, in November 2025, only the first part on information theory has been written.
+
+In this sense, this website serves at least two functions:
+
+- A technical, historical, and philosophical introduction to information theory
+- An appendix to my work in Big Data & Society and elsewhere
+
+To cite this page, please use:
+
+<pre><code>@book{brunila2025,
+  author = {Brunila, Mikael},
+  title = {A Mathematical Theory of Communication},
+  year = {2025},
+  publisher = {University of Illinois Press}
+}</code></pre>

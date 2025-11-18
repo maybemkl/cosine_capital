@@ -1,0 +1,18 @@
+pre, code { tab-size: 2; }
+pre code { white-space: pre; }
+
+/* Hide code blocks that start with %%html - will be handled by JS below */
+.hide-code-block {
+  display: none !important;
+}
+
+/* Hide code toggle buttons and details elements wrapping hidden code blocks */
+.hide-code-block,
+details.code-fold:has(.hide-code-block) {
+  display: none !important;
+}
+
+.highlighted-node rect {
+  fill: #EE4B2B;
+  stroke: #7c200e;
+}
