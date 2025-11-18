@@ -39,9 +39,11 @@ In this sense, this website serves at least two functions:
 
 To cite this page, please use:
 
-<pre><code>@book{brunila2025,
+<pre><code>@online{brunila2025informationtheory,
   author = {Brunila, Mikael},
-  title = {A Mathematical Theory of Communication},
+  title = {From Bits to Embeddings – A Critical Introduction to Information Theory},
   year = {2025},
-  publisher = {University of Illinois Press}
+  url = {https://mikaelbrunila.com/information-theory},
+  note = {Online tutorial},
+  langid = {en}
 }</code></pre>
