@@ -25,6 +25,10 @@ format:
     math: mathjax
     code-fold: show
     code-summary: "Code Toggle"
+    open-graph: true
+    twitter-card: true
+    image: img/shannon_general_communication_system_diagram.png
+    description: "A comprehensive introduction to classical information theory as conceived by Claude Shannon and its connections to neural networks and large language models today."
 
 execute:
   freeze: false
