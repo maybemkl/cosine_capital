@@ -1,6 +1,7 @@
 ---
 title: Introduction
 subtitle: "Understanding how the Noisy Channel metaphor underlies both bits and embeddings"
+description: "A comprehensive introduction to classical information theory as conceived by Claude Shannon and its connections to neural networks and large language models today."
 ---
 
 This website provides supplementary context for the articles ["Cosine Capital: Large language models and the embedding of all things"](https://journals.sagepub.com/doi/10.1177/20539517251386055) (Big Data & Society, October 2025) and ["Taking AI into the Tunnels"](https://www.e-flux.com/journal/151/652643/taking-ai-into-the-tunnels) (e-flux, January 2025), along with some upcoming articles on the same topic. More than that, it provides a comprehensive introduction to classical information theory as it was conceived by Claude Shannon and its connections and impacts on neural network and large language model (LLM) research today.
