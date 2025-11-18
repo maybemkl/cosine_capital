@@ -1,6 +1,6 @@
 project:
   type: book
-  output-dir: _site
+  output-dir: ../mikaelbrunila.com/public/information-theory
 
 book:
   title: "From Bits to Embeddings – A Critical Introduction to Information Theory"
