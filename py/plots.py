@@ -211,6 +211,29 @@ def plot_entropy(coin_entropies, max_entr=False):
     plt.tight_layout()
     plt.show()
 
+def plot_symbol_probs(uniform_probs, language):
+    fig, ax = plt.subplots(figsize=(5.8, 3.8))
+    
+    # histogram-style bars (outline only, no fill)
+    ax.bar(
+        range(len(uniform_probs)), 
+        uniform_probs, 
+        edgecolor="black", 
+        color="lightblue",
+        fill=True, 
+        linewidth=1.5
+    )
+    
+    ax.set_xticks(range(len(language)))
+    ax.set_xticklabels(language, fontsize=12)
+    ax.set_ylabel("Probability", fontsize=14)
+    ax.set_xlabel("Language", fontsize=14)
+    ax.tick_params(axis="both", which="major", labelsize=12)
+    ax.grid(True, linestyle='-', linewidth=0.5, alpha=0.6)
+    
+    plt.tight_layout()
+    plt.show()
+
 def plot_probability_sequence(p_heads_interval):
     """
     Plot probability values over a sequence.
