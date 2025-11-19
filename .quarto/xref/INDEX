@@ -10,5 +10,11 @@
   },
   "notebooks/03_kl_divergence.ipynb": {
     "03_kl_divergence.html": "07b91b1b"
+  },
+  "notebooks/04_word2vec.ipynb": {
+    "04_word2vec.html": "9c657f3a"
+  },
+  "notebooks/05_attention.ipynb": {
+    "05_attention.html": "7a40e74c"
   }
 }

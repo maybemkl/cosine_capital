@@ -4,14 +4,19 @@ project:
 
 book:
   title: "From Bits to Embeddings – A Critical Introduction to Information Theory"
-  description: "A comprehensive introduction to classical information theory as conceived by Claude Shannon and its connections to neural networks and large language models today."
   chapters:
-    - index.qmd
-    - part: "Part I — Information Theory"
+    - part: "Part I — Introduction"
+      chapters:
+        - index.qmd
+    - part: "Part II — Information Theory"
       chapters:
         - notebooks/01_bits.ipynb
         - notebooks/02_entropy.ipynb
         - notebooks/03_kl_divergence.ipynb
+    - part: "Part III — Language Models (TBD)"
+      chapters:
+        - notebooks/04_word2vec.ipynb
+        - notebooks/05_attention.ipynb
 
 format:
   html:

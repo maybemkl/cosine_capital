@@ -1,43 +1,71 @@
 ---
-title: Introduction
+title:  Why Information Theory?
 subtitle: "Understanding how the Noisy Channel metaphor underlies both bits and embeddings"
-description: "A comprehensive introduction to classical information theory as conceived by Claude Shannon and its connections to neural networks and large language models today."
 ---
+# Why Information Theory?
+This website provides supplementary context for the articles ["Cosine Capital: Large language models and the embedding of all things"](https://journals.sagepub.com/doi/10.1177/20539517251386055) (Big Data & Society, October 2025) and ["Taking AI into the Tunnels"](https://www.e-flux.com/journal/151/652643/taking-ai-into-the-tunnels) (e-flux, January 2025), along with some upcoming articles on the same topic. More than that, it provides a comprehensive introduction to classical information theory as it was conceived by Claude Shannon and its connections and impacts on neural network and large language model (LLM) research today through a parallel reading of information theory in the social sciences since World War II.
 
-This website provides supplementary context for the articles ["Cosine Capital: Large language models and the embedding of all things"](https://journals.sagepub.com/doi/10.1177/20539517251386055) (Big Data & Society, October 2025) and ["Taking AI into the Tunnels"](https://www.e-flux.com/journal/151/652643/taking-ai-into-the-tunnels) (e-flux, January 2025), along with some upcoming articles on the same topic. More than that, it provides a comprehensive introduction to classical information theory as it was conceived by Claude Shannon and its connections and impacts on neural network and large language model (LLM) research today.
-
+## The Noisy Channel and the Conduit Metaphor
 Information theory relies on a very particular metaphor that understand communication as a sort of "conduit": You encode a message with a key, send the encoded message to a receiver, who decodes it with the same key, and reads the message. For instance, if you write "SOS" in Morse code, they "key" is the table that tells you how many dots (.) and dashes (-) to use for the letters S and O. In this case, the encoded version of your message is "...---...", i.e. three dots, three dashes, and, again, three dots. 
 
 ::: {.column-margin}
-Reddy, M. (1993). The conduit metaphor. In *Metaphor and thought* (2nd ed., pp. 164–201). Cambridge University Press.
+Reddy, M. (1993). The conduit metaphor. In *Metaphor and thought*, 2nd ed., pp. 164–201. Cambridge University Press.
+<br>
+<br>
+Lakoff, G., & Johnson, M. (2008). *Metaphors we live by*. University of Chicago Press.
 :::
 
-No where is this logic as neatly encapsulated as in the "The General Communications System" deviced by Claude Shannon, who is widely concidered the father of modern information theory. In this diagram, a sender picks a message (SOS), encodes it (... --- ...) using an [appropriate device](https://en.wikipedia.org/wiki/Telegraph_key), sends it over a channel such as telegraph wires to a [receiver](https://en.wikipedia.org/wiki/Telegraph_sounder), that then decodes the original "SOS" message from the dots and dashes. In the process, physical distortion on the line might scramble the encoded message, perhaps converting it to "... --- ..-". In this case, the receiver would decode it as "SOU" since "..-" stands for "U" in Morse. The wrong message would be received.
+No where is this logic as neatly encapsulated as in the "The General Communications System" deviced by Claude Shannon, who is widely concidered the father of modern information theory. In this diagram, a sender picks a message (SOS), encodes it (... --- ...) using an [appropriate device](https://en.wikipedia.org/wiki/Telegraph_key), sends it over a channel such as telegraph wires to a [receiver](https://en.wikipedia.org/wiki/Telegraph_sounder), that then decodes the original "SOS" message from the dots and dashes. In the process, physical distortion on the line might scramble the encoded message, perhaps converting it to "... --- ..-". In this case, the receiver would decode it as "SOU" since "..-" stands for "U" in Morse. The wrong message would be received. 
 
 ::: {.column-margin}
 ![](img/shannon_general_communication_system_diagram.png)
-A "General Communications System". Shannon, C. E. (1948). A Mathematical Theory of Communication. The Bell System Technical Journal, 27(3), 379–423. The Bell System Technical Journal. [[URL]](https://ieeexplore.ieee.org/document/6773024) 
+A "General Communications System" as depicted in Shannon, C. E. (1948). "A Mathematical Theory of Communication". *The Bell System Technical Journal*, 27(3), 379–423. . [[URL]](https://ieeexplore.ieee.org/document/6773024) 
 :::
 
-While this technical definition of communication in itself is quite straightforward, the general metaphor has taken an astonishing hold of how we understand communication more broadly, as linguists like Michael Reddy and George Lakoff have highlighted. Already in his introduction to Shannon's seminal book on information theory, Warren Weaver suggested that words might encode intentions that are then decoded from the words. If the words are decoded wrong, false intentions are deciphered from them. Indeed, as I and others have argued elsewhere, this metaphor seems to guide the field of natural language processing (NLP) today, not least in how large language models (LLMs) are understood to model and replicate human language. 
+Language modelling was from the very start an integral part of this venture. Not only did Shannon use language, in addition to coin tosses, as the quintessential example to explain and illustrate his concept of information; he also published a paper on the "Entropy of English" where test subjects were given sentences with redacted words and made to guess the missing words. This sort of "masking" of words is also how LLMs are trained today. Indeed, what we today know as "language modelling" was, as I highlight in my doctoral dissertation, for a long time called the "Shannon Game."
+
+:::{.column-margin}
+Brunila, M. (2024). *Information & Meaning in the Social Sciences: Enclosure, Capital, Metaphor & Method*. Ph.D. thesis, McGill University. [[URL]](https://www.proquest.com/docview/3235005234/abstract/A09383A43EA4997PQ/1)
+:::
+
+## From Technics to Semantics
+While Shannon's technical definition of communication in itself is quite straightforward, the general metaphor has taken an astonishing hold of how we understand communication more broadly, as linguists like Michael Reddy and George Lakoff have highlighted. Already in his introduction to Shannon's seminal book on information theory, Warren Weaver suggested that words might encode intentions that are then decoded from the words. Beyond the technical level of encoding words in engineering, there was also the "semantic level" of transmitting the desired meaning and the "effectiveness problem" on making received meaning affect conduct in a desired way. If  words are decoded wrong, false intentions are deciphered from them, resulting in undesired behavior. This generalization of communication more broadly as a practice of encoding and decoding was explicitly picked up and elaborated on in the social sciences by people like Gregory Bateson, Talcott Parsons, and Niklas Luhmann, but is equally evident when inspecting closely the works of other influential social thinkers such as Erving Goffman who thought of communication as an "information game."
 
 ::: {.column-margin}
-Lakoff, G., & Johnson, M. (2008). *Metaphors we live by*. University of Chicago Press.
+Weaver, W. (1953). Recent contributions to the mathematical theory of communication. *ETC: A Review of General Semantics*, 10(4), 261–281.
 <br>
 <br>
+Goffman, E. (1959). *The presentation of self in everyday life* (First Anchor Books Edition). Anchor Books.
+:::
+
+In a sense, the LLM closes the circle, as computational systems that rely on the technical encoding of words as "embeddings", are now presented and perceived as semantically capable agents. This is why I have argued that the noisy channel is perhaps *the* fundamental metaphor guiding the production of language between AI systems and humans today, with LLM embeddings becoming the encoders and decoders of meaning. Just as the conception of bits and information entropy changed how we think about communication after World War II, LLMs are already changing how we think about human communication. What's more, the LLM had hardly itself been conceivable if the noisy channel had not been generalized to human communication more broadly. Part and parcel of this process was the reduction of semantics to the observed "distributional" patterns between words and the "company they keep", which suggested that similar words are found with similar sets of words.
+
+::: {.column-margin}
 Bender, E. M., & Koller, A. (2020). Climbing towards NLU: On Meaning, Form, and Understanding in the Age of Data. *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics*, 5185–5198. [[URL]](https://doi.org/10.18653/v1/2020.acl-main.463)
 <br>
 <br>
 Brunila, M. (2025). Cosine capital: Large language models and the embedding of all things. *Big Data & Society*, 12(4). [[URL]](https://doi.org/10.1177/20539517251386055)
+<br>
+<br>
+Brunila, M., & LaViolette, J. (2022). What company do words keep? Revisiting the distributional semantics of J.R. Firth & Zellig Harris. Proceedings of the 2022 Conference of the NAACL, 4403–4417. [[URL]](https://aclanthology.org/2022.naacl-main.327)
+
 :::
 
-On this website, I will, in the first instance, use Shannon's diagram of a General Communications System to provide not only a *technical* introduction to classical information theory but also a *conceptual* map between these technical concepts and the conduit metaphor of communication. Starting from the encoding of words into the zeroes and ones of **bits**, I move to show how expected information in bits is quantified through **information entropy**, and compared through **relative entropy**, **information** or **Kullback-Leibler divergence**, and **cross-entropy**. On the way, I connect these technical concepts to conceptual readings of information theory by anthropologists such as Gregory Bateson. In the second instance, I show how these tools and metaphors have gained new force through their application in the encoder-decoder architectures that are implicitly or explicitly implemented in both small (Word2Vec) and large (Transformer) language models. At this time, in November 2025, only the first part on information theory has been written.
+## Historical and Technical Literacy
+Given this tight coupling between mathematical information theory and notions of communication in the social sciences and the popular imaginary, I have often found it perplexing that social scientists do not seem to engage with information theory. Indeed, for my PhD, I decided that I had to fully grasp the models and concepts of early information theory and their connection to LLMs today, along with the parallel  back-and-forth transfer of these ideas between the engineering and social sciences.
+
+On this website, I will, in the first instance, use Shannon's diagram of a General Communications System to provide not only a *technical* introduction to classical information theory but also, through annotations and citations, a running commentary on how these technical concepts have been interpreted or instrumentalized in the social sciences. Starting from the encoding of words into the zeroes and ones of **bits**, I move to show how expected information in bits is quantified through **information entropy**, and compared through **relative entropy**, **information** or **Kullback-Leibler divergence**, and **cross-entropy**. In the second part, I show how these tools and metaphors have gained new force through their application in the encoder-decoder architectures that are implicitly or explicitly implemented in both small (Word2Vec) and large (Transformer) language models, with a particular emphasis on embeddings and their contextualized representations through the mechanism knowns as "attention."
+
+:::{.column-margin}
+At this time, in November 2025, only the first part on information theory has been written, but I expect the second part to be ready sometime in late 2025 and early 2026.
+:::
 
 In this sense, this website serves at least two functions:
 
-- A technical, historical, and philosophical introduction to information theory
+- A technical, historical, and philosophical introduction to information theory to improve the technical "information literacy" of social scientists, as well as the "historical literacy" of engineers
 - An appendix to my work in Big Data & Society and elsewhere
 
+## Citation
 To cite this page, please use:
 
 <pre><code>@online{brunila2025informationtheory,

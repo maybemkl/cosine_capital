@@ -16,3 +16,8 @@ details.code-fold:has(.hide-code-block) {
   fill: #EE4B2B;
   stroke: #7c200e;
 }
+
+/* Hide description from page display (keep for meta tags) */
+.description {
+  display: none !important;
+}
