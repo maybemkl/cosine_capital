@@ -15,16 +15,19 @@ Reddy, M. (1993). The conduit metaphor. In *Metaphor and thought*, 2nd ed., pp. 
 Lakoff, G., & Johnson, M. (2008). *Metaphors we live by*. University of Chicago Press.
 :::
 
-No where is this logic as neatly encapsulated as in the "The General Communications System" deviced by Claude Shannon, who is widely concidered the father of modern information theory. In this diagram, a sender picks a message (SOS), encodes it (... --- ...) using an [appropriate device](https://en.wikipedia.org/wiki/Telegraph_key), sends it over a channel such as telegraph wires to a [receiver](https://en.wikipedia.org/wiki/Telegraph_sounder), that then decodes the original "SOS" message from the dots and dashes. In the process, physical distortion on the line might scramble the encoded message, perhaps converting it to "... --- ..-". In this case, the receiver would decode it as "SOU" since "..-" stands for "U" in Morse. The wrong message would be received. 
+Nowhere is this logic as neatly encapsulated as in the "The General Communications System" deviced by Claude Shannon, who is widely concidered the father of modern information theory. In this diagram, a sender picks a message (e.g., "SOS"), encodes it (e.g., "... --- ...") using an [appropriate device](https://en.wikipedia.org/wiki/Telegraph_key), sends it over a channel such as telegraph wires to a [receiver](https://en.wikipedia.org/wiki/Telegraph_sounder), that then decodes the original "SOS" message from the dots and dashes. In the process, physical distortion or "noise" on the line might scramble the encoded message, perhaps converting it to "... --- ..-". In this case, the receiver would decode it as "SOU" since "..-" stands for "U" in Morse. The wrong message would be received. 
 
 ::: {.column-margin}
 ![](img/shannon_general_communication_system_diagram.png)
-A "General Communications System" as depicted in Shannon, C. E. (1948). "A Mathematical Theory of Communication". *The Bell System Technical Journal*, 27(3), 379–423. . [[URL]](https://ieeexplore.ieee.org/document/6773024) 
+A "General Communications System" as depicted in Shannon, C. E. (1948). [[URL]](https://ieeexplore.ieee.org/document/6773024) 
 :::
 
 Language modelling was from the very start an integral part of this venture. Not only did Shannon use language, in addition to coin tosses, as the quintessential example to explain and illustrate his concept of information; he also published a paper on the "Entropy of English" where test subjects were given sentences with redacted words and made to guess the missing words. This sort of "masking" of words is also how LLMs are trained today. Indeed, what we today know as "language modelling" was, as I highlight in my doctoral dissertation, for a long time called the "Shannon Game."
 
 :::{.column-margin}
+Shannon, C. E. (1951). Prediction and Entropy of Printed English. *Bell System Technical Journal*, 30(1), 50–64.[[URL]](https://doi.org/10.1002/j.1538-7305.1951.tb01366.x)
+<br>
+<br>
 Brunila, M. (2024). *Information & Meaning in the Social Sciences: Enclosure, Capital, Metaphor & Method*. Ph.D. thesis, McGill University. [[URL]](https://www.proquest.com/docview/3235005234/abstract/A09383A43EA4997PQ/1)
 :::
 
@@ -55,7 +58,7 @@ Brunila, M., & LaViolette, J. (2022). What company do words keep? Revisiting the
 :::
 
 ## Historical and Technical Literacy
-Given this tight coupling between mathematical information theory and notions of communication in the social sciences and the popular imaginary, I have often found it perplexing that social scientists do not seem to engage with information theory. Indeed, for my PhD, I decided that I had to fully grasp the models and concepts of early information theory and their connection to LLMs today, along with the parallel  back-and-forth transfer of these ideas between the engineering and social sciences.
+Given this tight coupling between mathematical information theory and notions of communication in the social sciences and the popular imaginary, I have often found it perplexing that social scientists do not seem to engage much with information theory. This is why, for my PhD, I decided that I had to fully grasp the models and concepts of early information theory and their connection to LLMs today, along with the parallel  back-and-forth transfer of these ideas between the engineering and social sciences.
 
 On this website, I will, in the first instance, use Shannon's diagram of a General Communications System to provide not only a *technical* introduction to classical information theory but also, through annotations and citations, a running commentary on how these technical concepts have been interpreted or instrumentalized in the social sciences. Starting from the encoding of words into the zeroes and ones of **bits**, I move to show how expected information in bits is quantified through **information entropy**, and compared through **relative entropy**, **information** or **Kullback-Leibler divergence**, and **cross-entropy**. In the second part, I show how these tools and metaphors have gained new force through their application in the encoder-decoder architectures that are implicitly or explicitly implemented in both small (Word2Vec) and large (Transformer) language models, with a particular emphasis on embeddings and their contextualized representations through the mechanism knowns as "attention."
 
@@ -68,7 +71,7 @@ In this sense, this website serves at least two functions:
 - A technical, historical, and philosophical introduction to information theory to improve the technical "information literacy" of social scientists, as well as the "historical literacy" of engineers
 - An appendix to my work in Big Data & Society and elsewhere
 
-## Citation and issues
+## Cite and contribute
 If you find any factual errors or otherwise want to contribute, feel free to either start and issue or open a pull request on [GitHub](https://github.com/maybemkl/cosine_capital).
 
 To cite this website, please use:
