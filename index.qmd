@@ -68,8 +68,10 @@ In this sense, this website serves at least two functions:
 - A technical, historical, and philosophical introduction to information theory to improve the technical "information literacy" of social scientists, as well as the "historical literacy" of engineers
 - An appendix to my work in Big Data & Society and elsewhere
 
-## Citation
-To cite this page, please use:
+## Citation and issues
+If you find any factual errors or otherwise want to contribute, feel free to either start and issue or open a pull request on [GitHub](https://github.com/maybemkl/cosine_capital).
+
+To cite this website, please use:
 
 <pre><code>@online{brunila2025informationtheory,
   author = {Brunila, Mikael},

@@ -24,6 +24,7 @@ format:
     code-overflow: scroll
     css: styles.css
     include-in-header: hide-html-code.html
+    include-after-body: footer.html
     theme: cosmo
     toc: true
     toc-location: left

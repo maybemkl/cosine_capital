@@ -1,0 +1,56 @@
+<footer class="footer py-3 border-top">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <p class="mb-1">
+          <a href="https://github.com/maybemkl/cosine_capital" target="_blank" rel="noopener" class="text-decoration-none">
+            <i class="bi bi-github" aria-hidden="true"></i> GitHub
+          </a>
+        </p>
+        <p class="mb-0 text-muted small">
+          © 2025 Mikael Brunila. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer {
+  position: relative;
+  clear: both;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+  background: transparent !important;
+  z-index: 1;
+}
+
+.footer .container-fluid {
+  background: transparent !important;
+}
+
+.footer a {
+  color: inherit;
+}
+
+.footer a:hover {
+  opacity: 0.8;
+}
+
+.footer .bi {
+  margin-right: 0.25rem;
+}
+
+/* Ensure sidebar doesn't overlap footer */
+.sidebar {
+  position: relative !important;
+  z-index: 0;
+}
+
+/* Ensure main content doesn't overlap footer */
+.quarto-layout-row {
+  padding-bottom: 100px;
+}
+</style>
+

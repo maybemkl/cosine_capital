@@ -21,3 +21,14 @@ details.code-fold:has(.hide-code-block) {
 .description {
   display: none !important;
 }
+
+/* Prevent TOC from overflowing footer */
+.sidebar {
+  padding-bottom: 100px !important;
+}
+
+.sidebar nav[role="doc-toc"] {
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}

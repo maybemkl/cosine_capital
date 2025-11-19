@@ -1,0 +1,93 @@
+<!-- Interactive version: self-contained HTML + JS tooltip hover (works in Quarto + Jupyter when trusted) -->
+<div id="shannon-diagram-transmitter-to-receiver" style="background:#fff; color:#000; font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; text-align:center; padding:20px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" style="max-width:100%;height:auto">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#000" />
+      </marker>
+    </defs>
+
+    <!-- Arrows -->
+    <path class="arrow" d="M160 190 H245" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path class="arrow" d="M365 190 H450" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path class="arrow" d="M490 190 H575" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path class="arrow" d="M695 190 H780" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path class="arrow" d="M470 285 V205" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+
+    <!-- Nodes -->
+    <g class="node" data-title="Information Source" data-desc='Produces a message consisting of symbols, words, data, etc.<br>(e.g. "SOS")'>
+      <rect x="40" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6" />
+      <text x="100" y="140" text-anchor="middle" font-weight="bold">INFORMATION</text>
+      <text x="100" y="155" text-anchor="middle" font-weight="bold">SOURCE</text>
+      <text x="202.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node highlighted-node" data-title="Transmitter" data-desc='Encodes the message into a signal for the channel<br>(e.g. "SOS" becomes "... --- ...")'>
+      <rect x="245" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6" />
+      <text x="305" y="155" text-anchor="middle" font-weight="bold">TRANSMITTER</text>
+      <text x="407.5" y="210" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node" data-title="Channel" data-desc='Carries the signal through a medium<br>(e.g., wire, air, fiber).'>
+      <rect x="450" y="175" width="40" height="30" fill="#fff" stroke="#000" stroke-width="2" rx="4" />
+      <text x="532.5" y="210" text-anchor="middle">RECEIVED</text>
+      <text x="532.5" y="225" text-anchor="middle">SIGNAL</text>
+    </g>
+
+    <g class="node highlighted-node" data-title="Receiver" data-desc='Decodes the signal to reconstruct the message.<br>(e.g. "... --- ..." becomes "SOS")'>
+      <rect x="575" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6" />
+      <text x="635" y="155" text-anchor="middle" font-weight="bold">RECEIVER</text>
+      <text x="737.5" y="260" text-anchor="middle">MESSAGE</text>
+    </g>
+
+    <g class="node" data-title="Destination" data-desc="The intended receiver or user of the message, whether human or machine.">
+      <rect x="780" y="160" width="120" height="80" fill="#fff" stroke="#000" stroke-width="2" rx="6" />
+      <text x="840" y="155" text-anchor="middle" font-weight="bold">DESTINATION</text>
+    </g>
+
+    <g class="node" data-title="Noise Source" data-desc='Random disturbances that alter the signal.<br>(e.g. "... --- ..." becomes "... --- ..-")'>
+      <rect x="430" y="285" width="80" height="60" fill="#fff" stroke="#000" stroke-width="2" rx="6" />
+      <text x="470" y="365" text-anchor="middle" font-weight="bold">NOISE SOURCE</text>
+    </g>
+  </svg>
+
+  <div class="tooltip" style="position:fixed; pointer-events:none; padding:8px 10px; font-size:12px; background:#fff; border:1px solid #999; border-radius:6px; opacity:0; transition:opacity 0.15s ease; box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+</div>
+
+<script type="text/javascript">
+  requestAnimationFrame(function(){
+    const container=document.getElementById('shannon-diagram-transmitter-to-receiver');
+    const nodes=container.querySelectorAll('.node');
+    const tooltip=container.querySelector('.tooltip');
+
+  nodes.forEach(node=>{
+    node.addEventListener('mouseenter',e=>{
+      tooltip.innerHTML='<strong>'+node.dataset.title+'</strong><br>'+node.dataset.desc;
+      tooltip.style.opacity='1';
+    });
+    node.addEventListener('mousemove',e=>{
+      tooltip.style.left=e.clientX+10+'px';
+      tooltip.style.top=e.clientY-20+'px';
+    });
+    node.addEventListener('mouseleave',()=>{
+      tooltip.style.opacity='0';
+    });
+  });
+})();
+</script>
+
+<!-- Instructions for Quarto or Jupyter -->
+<!--
+Use this block in a Quarto .qmd or Jupyter cell:
+
+Quarto:
+```{=html}
+<div id="shannon-diagram"> ... </div>
+```
+
+Jupyter Notebook:
+%%html
+<div id="shannon-diagram"> ... </div>
+
+Make sure notebook is trusted (File → Trust Notebook) or in Quarto, ensure `execute: true`.
+-->
