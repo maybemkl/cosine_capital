@@ -1,5 +1,6 @@
 ---
 title:  Why Information Theory?
+author: Mikael Brunila
 subtitle: "The ubiquity of the Noisy Channel and the Conduit Metaphor of communication."
 ---
 # Why Information Theory?

@@ -4,6 +4,11 @@ project:
 
 book:
   title: "From Bits to Embeddings – A Critical Introduction to Information Theory"
+  navbar: false
+  sidebar:
+    collapse-level: 1
+    border: true
+    #footer: "Test"
   chapters:
     - part: "Part I — Introduction"
       chapters:
@@ -23,11 +28,15 @@ format:
     monofont: "JetBrains Mono"
     code-overflow: scroll
     css: styles.css
-    include-in-header: hide-html-code.html
+    include-in-header: 
+      - hide-html-code.html
+      - sidebar-sponsor.html
     include-after-body: footer.html
     theme: cosmo
+    toc-title: "On this page"
     toc: true
     toc-location: left
+    toc-expand: true
     toc-depth: 4
     math: mathjax
     code-fold: show

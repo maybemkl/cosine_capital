@@ -27,13 +27,11 @@ details.code-fold:has(.hide-code-block) {
   position: sticky !important;
   top: 0;
   align-self: flex-start;
-  padding-bottom: 100px !important;
-  height: fit-content;
-  max-height: 100vh;
 }
 
 .sidebar.floating nav[role="doc-toc"] {
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 280px);
   overflow-y: auto;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
