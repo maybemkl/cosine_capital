@@ -73,7 +73,7 @@ In this sense, this website serves at least two functions:
 - An appendix to my work in Big Data & Society and elsewhere
 
 ## Cite, contribute, donate
-If you find any factual errors or otherwise want to contribute, feel free to either start and issue or open a pull request on [GitHub](https://github.com/maybemkl/cosine_capital). If you find this work helpful, please consider donating something through [Buy Me A Coffee](https://buymeacoffee.com/mikaelbrunila), [Ko-Fi](https://ko-fi.com/mikaelbrunila), [PayPal](https://www.paypal.com/donate/?business=LEDZ3LJSRSRUN&no_recurring=0&item_name=I+create+tutorials+for+information+theory+and+geospatial+data+science%21&currency_code=EUR), or [GitHun Sponsors](https://github.com/sponsors/maybemkl).
+If you find any factual errors or otherwise want to contribute, feel free to either start and issue or open a pull request on [GitHub](https://github.com/maybemkl/cosine_capital). If you find this work helpful, please consider donating something through [Buy Me A Coffee](https://buymeacoffee.com/mikaelbrunila), [Ko-Fi](https://ko-fi.com/mikaelbrunila), [PayPal](https://www.paypal.com/donate/?business=LEDZ3LJSRSRUN&no_recurring=0&item_name=I+create+tutorials+for+information+theory+and+geospatial+data+science%21&currency_code=EUR), or [GitHub Sponsors](https://github.com/sponsors/maybemkl).
 
 To cite this website, please use:
 
